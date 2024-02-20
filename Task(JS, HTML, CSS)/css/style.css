@@ -26,21 +26,6 @@ body {
     align-items: center;
     margin-bottom: 20px;
   }
-
-  #options button{
-    margin-bottom: 10px;
-    margin-left: 6.6%;
-    border-radius: 5%;
-    width: 40%;
-    height: 50px;
-  }
-  button.selected {
-    background-color: #add8e6; 
-  }
-  button {
-    margin-bottom: 10px;
-    border-radius: 5%;
-  }
   
   #counter {
     margin-bottom: 20px;
