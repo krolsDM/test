@@ -1,0 +1,97 @@
+document.addEventListener("DOMContentLoaded", function () {
+
+const questions = [
+    {
+      question: "How many planets are in the solar system?",
+      options: ["10", "9", "8"],
+      correctAnswer: 3
+    },
+    
+    {
+        question: "What is the freezing point of water?",
+        options: ["0", "-5", "-13"],
+        correctAnswer: 1
+    },
+    
+    {
+        question: "How many chromosomes are in the human genome?",
+        options: ["47", "46", "33"],
+        correctAnswer: 2
+    },
+  ];
+
+  let currentQuestionIndex = 0;
+  let correctAnswers = 0;
+
+  function updateQuestion() {
+    const currentQuestion = questions[currentQuestionIndex];
+    document.getElementById("question").textContent = `Вопрос ${currentQuestionIndex + 1}: ${currentQuestion.question}`;
+    document.getElementById("counter").textContent = `Вопрос ${currentQuestionIndex + 1} из ${questions.length}`;
+    document.getElementById("result").textContent = "";
+
+    const optionsContainer = document.getElementById("options");
+    optionsContainer.innerHTML = "";
+
+    currentQuestion.options.forEach((option, index) => {
+      const optionElement = document.createElement("button");
+      optionElement.textContent = option;
+      optionElement.addEventListener("click", () => selectAnswer(index + 1));
+      optionsContainer.appendChild(optionElement);
+    });
+  }
+
+  function selectAnswer(userAnswer) {
+    const currentQuestion = questions[currentQuestionIndex];
+
+    if (userAnswer === currentQuestion.correctAnswer) {
+      document.getElementById("result").textContent = "Правильно!";
+      document.getElementById("result").style.color = "#8aff8a";
+      correctAnswers++;
+    } else {
+      document.getElementById("result").textContent = "Неправильно!";
+      document.getElementById("result").style.color = "#ff8a8a";
+    }
+
+    document.getElementById("next-btn").disabled = false;
+
+    // Отключите обработчики событий на кнопках после выбора ответа
+    const buttons = document.querySelectorAll("#options button");
+    buttons.forEach(button => button.removeEventListener("click", selectAnswer));
+  }
+
+  function nextQuestion() {
+    const options = document.querySelectorAll('#options button');
+    options.forEach(option => option.disabled = false);
+
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+      updateQuestion();
+      document.getElementById("next-btn").disabled = true;
+    } else {
+      showResults();
+    }
+  }
+
+  function showResults() {
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `Правильных ответов: ${correctAnswers} из ${questions.length}`;
+    document.getElementById("next-btn").style.display = "none";
+    document.getElementById("restart-btn").style.display = "block";
+  }
+
+  function restartQuiz() {
+    currentQuestionIndex = 0;
+    correctAnswers = 0;
+    updateQuestion();
+    document.getElementById("next-btn").style.display = "block";
+    document.getElementById("restart-btn").style.display = "none";
+  }
+
+  // Инициализация первого вопроса при загрузке
+  updateQuestion();
+
+  // Присваиваем функцию nextQuestion к кнопке после определения
+  document.getElementById("next-btn").addEventListener("click", nextQuestion);
+  document.getElementById("restart-btn").addEventListener("click", restartQuiz);
+});
