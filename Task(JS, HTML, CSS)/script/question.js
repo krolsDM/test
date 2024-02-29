@@ -50,3 +50,4 @@
       correctAnswer: [1]
     }
 ];
+export default questions;

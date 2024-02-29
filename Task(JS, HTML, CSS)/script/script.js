@@ -1,4 +1,4 @@
-
+import questions from "./question.js";
 document.addEventListener('DOMContentLoaded', function () {
   let currentQuestionIndex = 0;
   let correctAnswers = 0;
